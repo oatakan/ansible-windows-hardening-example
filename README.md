@@ -1,7 +1,7 @@
 # ansible-windows-hardening-example-
 This repo contains Ansible playbook examples to harden Windows systems with CIS and STIG and report the results
 
-## Provision target Windows VMs to VMware, Azure, Red Hat Virtualization, OpenShift environments
+### Provision target Windows VMs to VMware, Azure, Red Hat Virtualization, OpenShift environments
     - instance_create_multi.yml
 ### Openscap scan, generate and email report
     - scan_report.yml
