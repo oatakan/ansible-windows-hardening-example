@@ -4,7 +4,8 @@
   vars:
     rule_2_2_33: false
     rule_9_3_5: false # do not reset firewall rules as it impacts winrm
-    rule_17_2_5: false # skip when in check mode
+    rule_17_2_5: false # doesn't support check mode
+    rule_17_2_6: false # doesn't support check mode
     rule_18_9_97_2_2: false # we need winrm enabled for remote management
     os_type: "win_{{ (ansible_distribution | regex_findall('^.* ([0-9]{1,4}|[0-9]{1}[.]?[0-9]{1}) .*'))[0] | replace('.','_') }}"
     cis_harden_role_names:
