@@ -1,0 +1,5 @@
+---
+os_type: "win_{{ (ansible_distribution | regex_findall('^.* ([0-9]{1,4}|[0-9]{1}[.]?[0-9]{1}) .*'))[0] | replace('.','_') }}"
+
+scap_benchmark_content_download_url: '{{ scap_benchmark_content_links[scap_content_type][os_type] }}'
+scap_benchmark_content_file_name: '{{ scap_benchmark_content_download_url | basename }}'

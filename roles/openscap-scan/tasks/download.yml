@@ -1,0 +1,17 @@
+---
+
+- block:
+   - name: download benchmark content
+     win_get_url:
+       url: "{{ scap_benchmark_content_download_url }}"
+       dest: '{{ temp_dir }}\{{ scap_benchmark_content_file_name }}'
+
+   - name: extract benchmark content
+     win_unzip:
+       src: '{{ temp_dir }}\{{ scap_benchmark_content_file_name }}'
+       dest: '{{ openscap_install_dir }}\'
+  always:
+    - name: remove temp file
+      win_file:
+        path: '{{ temp_dir }}\{{ scap_benchmark_content_file_name }}'
+        state: absent

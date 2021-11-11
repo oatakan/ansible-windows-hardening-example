@@ -1,0 +1,51 @@
+---
+providers:
+  ovirt:
+    cluster: production
+
+nodes:
+  - name: wintarget1
+    role: windows_target
+    app_name: hardening_demo
+    networks:
+      - name: ovirtmgmt
+    disks:
+      - name: windows-2016-standard-core
+        name_prefix: no
+        size: 50GiB
+    domain: home.ad
+    memory: 5120
+    cpu: 2
+    template: windows-2016-standard-core
+    type: server
+    sysprep: yes
+  - name: wintarget2
+    role: windows_target
+    app_name: hardening_demo
+    networks:
+      - name: ovirtmgmt
+    disks:
+      - name: windows-2019-standard
+        name_prefix: no
+        size: 50GiB
+    domain: home.ad
+    memory: 4096
+    cpu: 2
+    template: windows-2019-standard
+    type: server
+    sysprep: yes
+  - name: wintarget3
+    role: windows_target
+    app_name: hardening_demo
+    networks:
+      - name: ovirtmgmt
+    disks:
+      - name: windows-2019-standard-core
+        name_prefix: no
+        size: 50GiB
+    domain: home.ad
+    memory: 4096
+    cpu: 2
+    template: windows-2019-standard-core
+    type: server
+    sysprep: yes

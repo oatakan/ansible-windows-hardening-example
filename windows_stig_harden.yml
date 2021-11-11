@@ -1,0 +1,19 @@
+- name: windows stig harden
+  hosts: all
+  strategy: "{{ play_strategy | default('linear') }}"
+  vars:
+    wn16_00_000270: false # not implemented
+    wn16_00_000350: false # fax feature does not exist on Server Core
+    wn16_00_000400: false # tftp client feature does not exist on Server Core
+
+    wn19_00_000320: false # fax feature does not exist on Server Core
+    wn19_00_000370: false # tftp client feature does not exist on Server Core
+
+    os_type: "win_{{ (ansible_distribution | regex_findall('^.* ([0-9]{1,4}|[0-9]{1}[.]?[0-9]{1}) .*'))[0] | replace('.','_') }}"
+    stig_harden_role_names:
+      win_2016: Windows-2016-STIG
+      win_2019: Windows-2019-STIG
+  tasks:
+    - include_role:
+        name: "{{ stig_harden_role_names[os_type] }}"
+      when: os_type in ['win_2016','win_2019']

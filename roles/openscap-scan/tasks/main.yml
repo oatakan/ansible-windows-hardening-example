@@ -1,0 +1,10 @@
+---
+- name: check benchmark file
+  win_stat:
+    path: '{{ openscap_install_dir }}\{{ scap_benchmark_content_file_name | replace(".zip", ".xml") }}'
+  register: check_benchmark_file
+
+- include_tasks: download.yml
+  when: not check_benchmark_file.stat.exists
+
+- include_tasks: scan.yml

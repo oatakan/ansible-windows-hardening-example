@@ -1,0 +1,14 @@
+- name: windows cis harden
+  hosts: all
+  strategy: "{{ play_strategy | default('linear') }}"
+  vars:
+    rule_9_3_5: false # do not reset firewall rules as it impacts winrm
+    rule_18_9_97_2_2: false # we need winrm enabled for remote management
+    os_type: "win_{{ (ansible_distribution | regex_findall('^.* ([0-9]{1,4}|[0-9]{1}[.]?[0-9]{1}) .*'))[0] | replace('.','_') }}"
+    cis_harden_role_names:
+      win_2016: Windows-2016-CIS
+      win_2019: Windows-2019-CIS
+  tasks:
+    - include_role:
+        name: "{{ cis_harden_role_names[os_type] }}"
+      when: os_type in ['win_2016','win_2019']

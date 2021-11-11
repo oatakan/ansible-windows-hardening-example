@@ -1,0 +1,14 @@
+- name: create instance
+  hosts: localhost
+  become: no
+  vars:
+    provider: vmware
+  vars_files:
+    - node-config/nodes-{{ provider }}.yml
+  pre_tasks:
+    - name: get amis on ec2
+      include_role:
+        name: ec2-find-amis
+      when: provider == 'ec2'
+  roles:
+    - ansible-role-{{ provider }}

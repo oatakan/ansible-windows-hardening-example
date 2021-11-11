@@ -1,0 +1,41 @@
+
+- src: https://github.com/oatakan/ansible-role-ec2
+  version: origin/master
+
+- src: https://github.com/oatakan/ansible-role-azure
+  version: origin/master
+
+- src: https://github.com/oatakan/ansible-role-vmware
+  version: origin/master
+
+- src: https://github.com/oatakan/ansible-role-ovirt
+  version: origin/master
+
+- src: https://github.com/oatakan/ansible-role-kubevirt
+  version: origin/master
+
+- src: https://github.com/oatakan/ansible-role-openstack
+  version: origin/master
+
+- src: https://github.com/oatakan/ansible-role-os-stack
+  version: origin/master
+
+- src: https://github.com/oatakan/ansible-role-openshift-add-auth-config.git
+  version: origin/master
+  name: oatakan.openshift-add-auth-config
+
+- src: https://github.com/ansible-lockdown/Windows-2016-CIS.git
+  version: origin/devel
+  name: Windows-2016-CIS
+
+- src: https://github.com/oatakan/Windows-2019-CIS.git
+  version: origin/add_core_support
+  name: Windows-2019-CIS
+
+- src: https://github.com/ansible-lockdown/Windows-2016-STIG.git
+  version: origin/devel
+  name: Windows-2016-STIG
+
+- src: https://github.com/ansible-lockdown/Windows-2019-STIG.git
+  version: origin/devel
+  name: Windows-2019-STIG

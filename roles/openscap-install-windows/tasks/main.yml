@@ -1,0 +1,18 @@
+---
+- block:
+    - name: download openscap for windows
+      win_get_url:
+        url: "{{ openscap_download_url }}"
+        dest: '{{ temp_dir }}\OpenSCAP-{{ openscap_version }}-win32.msi'
+
+    - name: make sure openscap is installed
+      win_package:
+        path: '{{ temp_dir }}\OpenSCAP-{{ openscap_version }}-win32.msi'
+        arguments:
+          - /quiet
+          - /norestart
+  always:
+    - name: remove temp file
+      win_file:
+        path: '{{ temp_dir }}\OpenSCAP-{{ openscap_version }}-win32.msi'
+        state: absent

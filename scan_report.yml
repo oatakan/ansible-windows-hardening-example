@@ -1,0 +1,17 @@
+- name: scan and report
+  hosts: all
+  vars:
+    scap_content_type: stig
+  tasks:
+    - name: openscap install
+      include_role:
+        name: openscap-install-windows
+
+    - name: openscap scan stig
+      include_role:
+        name: openscap-scan
+
+    - name: generate and send html report
+      include_role:
+        name: generate-scan-report
+      run_once: yes

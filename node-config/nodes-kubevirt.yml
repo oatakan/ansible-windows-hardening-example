@@ -1,0 +1,27 @@
+---
+
+nodes:
+  - name: wintarget1
+    role: windows_target
+    app_name: hardening_demo
+    domain: home.ad
+    memory: 5120
+    cpu: 2
+    user_name: vagrant
+    template: windows-2016-standard-core
+  - name: wintarget2
+    role: windows_target
+    app_name: hardening_demo
+    domain: home.ad
+    memory: 4096
+    cpu: 2
+    user_name: vagrant
+    template: windows-2019-standard
+  - name: wintarget3
+    role: windows_target
+    app_name: hardening_demo
+    domain: home.ad
+    memory: 4096
+    cpu: 2
+    user_name: vagrant
+    template: windows-2019-standard-core

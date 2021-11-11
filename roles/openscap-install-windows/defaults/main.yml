@@ -1,0 +1,4 @@
+---
+temp_dir: '{{ ansible_env.TEMP }}'
+openscap_version: 1.3.0
+openscap_download_url: https://github.com/OpenSCAP/openscap/releases/download/{{ openscap_version }}/OpenSCAP-{{ openscap_version }}-win32.msi

@@ -1,0 +1,36 @@
+---
+
+- name: send email via sendgrid
+  sendgrid:
+    api_key: "{{ sendgrid_api_key | default(omit) }}"
+    from_address: "{{ sendgrid_from_email_address }}"
+    to_addresses: "{{ sendgrid_to_email_addresses }}"
+    subject: "[Ansible] Windows scan report"
+    body: "{{ lookup('template', 'scan_report.html.j2') }}"
+    html_body: yes
+  delegate_to: localhost
+  become: no
+  when: sendgrid_api_key is defined
+
+- name: send email via smtp
+  mail:
+    host: "{{ smtp_server_host }}"
+    port: "{{ smtp_server_port }}"
+    username: "{{ smtp_account | default(omit) }}"
+    password: "{{ smtp_account_password | default(omit) }}"
+    from: "{{ smtp_from_email_address }}"
+    to: "{{ smtp_to_email_addresses }}"
+    subject: "[Ansible] Windows scan report"
+    body: "{{ lookup('template', 'scan_report.html.j2') }}"
+    subtype: html
+  delegate_to: localhost
+  become: no
+  when: send_email_with_smtp | bool
+
+- name: save file
+  template:
+    src: scan_report.html.j2
+    dest: scan_report.html
+  delegate_to: localhost
+  become: no
+  when: save_report_locally | bool
