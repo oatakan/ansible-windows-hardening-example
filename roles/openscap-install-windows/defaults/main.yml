@@ -1,4 +1,5 @@
 ---
 temp_dir: '{{ ansible_env.TEMP }}'
-openscap_version: 1.3.0
+openscap_version: 1.3.4
 openscap_download_url: https://github.com/OpenSCAP/openscap/releases/download/{{ openscap_version }}/OpenSCAP-{{ openscap_version }}-win32.msi
+openscap_prereq_download_url: https://aka.ms/vs/15/release/VC_redist.x86.exe

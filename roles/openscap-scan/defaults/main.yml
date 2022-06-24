@@ -1,6 +1,6 @@
 ---
 temp_dir: '{{ ansible_env.TEMP }}'
-openscap_version: 1.3.0
+openscap_version: 1.3.4
 openscap_install_dir: 'C:\Program Files (x86)\OpenSCAP {{ openscap_version }}'
 scap_content_type: stig
 
