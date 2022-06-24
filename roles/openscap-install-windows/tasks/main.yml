@@ -1,7 +1,7 @@
 ---
 - block:
     - name: install prereq VC_redist.x86.exe
-      ansible.windows.win_package:
+      win_package:
         path: "{{ openscap_prereq_download_url }}"
         arguments:
           - /S
