@@ -3,6 +3,7 @@
     - name: install prereq VC_redist.x86.exe
       win_package:
         path: "{{ openscap_prereq_download_url }}"
+        product_id: '{D5AEE36E-4771-4F65-BDB6-8C59077BFBE4}'
         arguments:
           - /S
 
