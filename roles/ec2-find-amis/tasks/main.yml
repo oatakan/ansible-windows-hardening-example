@@ -65,7 +65,7 @@
 
 - name: set ami id for windows 2022
   set_fact:
-    win2019_ami_id: "{{ win2022_ami_find.images[-1].image_id }}"
+    win2022_ami_id: "{{ win2022_ami_find.images[-1].image_id }}"
   when:
     - win2022_ami_find.images is defined
     - win2022_ami_find.images|length > 0
