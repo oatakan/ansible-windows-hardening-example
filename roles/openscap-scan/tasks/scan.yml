@@ -8,7 +8,7 @@
     - report.xml
 
 - name: openscap scan
-  win_shell: oscap xccdf eval --report report.html --results report.xml  {{ scap_benchmark_content_file_name | replace(".zip", ".xml") }}
+  win_shell: oscap xccdf eval --report report.html --results report.xml --profile xccdf_mil.disa.stig_profile_Disable_Slow_Rules {{ scap_benchmark_content_file_name | replace(".zip", ".xml") }}
   args:
     chdir: '{{ openscap_install_dir }}\'
     creates: '{{ openscap_install_dir }}\report.xml'
