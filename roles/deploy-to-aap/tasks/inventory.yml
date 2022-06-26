@@ -1,0 +1,74 @@
+---
+
+- name: create local inventory
+  awx.awx.inventory:
+    name: local
+    description: local
+    organization: Default
+    state: present
+    controller_host: '{{ controller_host }}'
+    controller_username: '{{ controller_username }}'
+    controller_password: '{{ controller_password }}'
+    validate_certs: '{{ controller_verify_ssl }}'
+  register: reg_tower_inventory_local
+  until: reg_tower_inventory_local is success
+  delay: 3
+  retries: 100
+
+- name: add localhost
+  awx.awx.host:
+    name: localhost
+    description: Local Host
+    inventory: local
+    state: present
+    controller_host: '{{ controller_host }}'
+    controller_username: '{{ controller_username }}'
+    controller_password: '{{ controller_password }}'
+    validate_certs: '{{ controller_verify_ssl }}'
+    variables:
+      ansible_connection: local
+      ansible_python_interpreter: /usr/bin/python3
+
+- name: create aws-windows-demo inventory
+  awx.awx.inventory:
+    name: aws-windows-demo
+    description: aws-windows-demo
+    organization: Default
+    state: present
+    controller_host: '{{ controller_host }}'
+    controller_username: '{{ controller_username }}'
+    controller_password: '{{ controller_password }}'
+    validate_certs: '{{ controller_verify_ssl }}'
+  register: reg_tower_inventory_aws_windows_demo
+  until: reg_tower_inventory_aws_windows_demo is success
+  delay: 3
+  retries: 100
+
+- name: create inventory source
+  awx.awx.inventory_source:
+    name: aws-windows-demo-source
+    description: aws-windows-demo-source
+    inventory: aws-windows-demo
+    credential: aws-demo
+    source: ec2
+    update_on_launch: yes
+    overwrite: yes
+    source_vars:
+      regions:
+        - us-east-1
+      filters:
+        'tag:app': hardening_demo
+      keyed_groups:
+        - prefix: tag
+          key: tags
+      compose:
+        ec2_id: instance_id
+    state: present
+    controller_host: '{{ controller_host }}'
+    controller_username: '{{ controller_username }}'
+    controller_password: '{{ controller_password }}'
+    validate_certs: '{{ controller_verify_ssl }}'
+  register: reg_tower_inventory_source_aws_windows_demo_source
+  until: reg_tower_inventory_source_aws_windows_demo_source is success
+  delay: 3
+  retries: 100

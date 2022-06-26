@@ -1,0 +1,13 @@
+---
+
+- include: credential_type.yml
+
+- include: credential.yml
+
+- include: project.yml
+
+- include: inventory.yml
+
+- include: job_template.yml
+
+- include: workflow_template.yml

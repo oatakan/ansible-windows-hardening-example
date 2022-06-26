@@ -1,0 +1,76 @@
+---
+
+- name: create windows hardening cis workflow template
+  awx.awx.workflow_job_template:
+    name: Windows Hardening CIS Pipeline
+    description: Windows Hardening CIS Automation Pipeline
+    schema:
+      - identifier: infra-remove
+        unified_job_template:
+          organization:
+            name: Default
+          name: AWS Remove Infra
+          type: job_template
+        credentials: []
+        related:
+          success_nodes: []
+          failure_nodes: []
+          always_nodes:
+            - identifier: infra-create
+          credentials: []
+      - identifier: infra-create
+        unified_job_template:
+          organization:
+            name: Default
+          name: AWS Provision Infra
+          type: job_template
+        related:
+          success_nodes:
+            - identifier: report-before
+          failure_nodes: []
+          always_nodes: []
+          credentials: []
+      - identifier: report-before
+        unified_job_template:
+          organization:
+            name: Default
+          name: Windows Hardening Scan and Report
+          type: job_template
+        related:
+          success_nodes:
+            - identifier: harden
+          failure_nodes: []
+          always_nodes: []
+          credentials: []
+      - identifier: harden
+        unified_job_template:
+          organization:
+            name: Default
+          name: Windows Hardening CIS
+          type: job_template
+        related:
+          success_nodes:
+            - identifier: report-after
+          failure_nodes: []
+          always_nodes: []
+          credentials: []
+      - identifier: report-after
+        unified_job_template:
+          organization:
+            name: Default
+          name: Windows Hardening Scan and Report
+          type: job_template
+        related:
+          success_nodes: []
+          failure_nodes: []
+          always_nodes: []
+          credentials: []
+    state: present
+    controller_host: '{{ controller_host }}'
+    controller_username: '{{ controller_username }}'
+    controller_password: '{{ controller_password }}'
+    validate_certs: '{{ controller_verify_ssl }}'
+  register: reg_wf_template_hardening_cis
+  until: reg_wf_template_hardening_cis is success
+  delay: 3
+  retries: 100

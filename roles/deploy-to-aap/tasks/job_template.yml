@@ -1,0 +1,99 @@
+---
+
+- name: create hardening scan and report job template
+  awx.awx.job_template:
+    name: Windows Hardening Scan and Report
+    description: Windows Hardening Scan and Report
+    job_type: run
+    inventory: aws-windows-demo
+    project: ansible-windows-hardening-example
+    playbook: scan_report.yml
+    credentials: "{{ job_template_windows_hardening_report_credentials }}"
+    limit: tag_app_hardening_demo
+    survey_enabled: yes
+    survey_spec:
+      name: survey
+      description: survey
+      spec:
+        - default: ''
+          required: true
+          variable: email_address
+          question_name: Enter an email address
+          question_description: To send the report to
+          type: text
+    extra_vars: "{{ job_template_windows_hardening_report_extra_vars | to_json }}"
+    state: present
+    controller_host: '{{ controller_host }}'
+    controller_username: '{{ controller_username }}'
+    controller_password: '{{ controller_password }}'
+    validate_certs: '{{ controller_verify_ssl }}'
+  register: reg_job_template_hardening_report
+  until: reg_job_template_hardening_report is success
+  delay: 3
+  retries: 100
+
+- name: create windows hardening cis job template
+  awx.awx.job_template:
+    name: Windows Hardening CIS
+    description: Windows Hardening CIS
+    job_type: run
+    inventory: aws-windows-demo
+    project: ansible-windows-hardening-example
+    playbook: windows_cis_harden.yml
+    credentials:
+      - aws-windows-machine
+    limit: tag_app_hardening_demo
+    state: present
+    controller_host: '{{ controller_host }}'
+    controller_username: '{{ controller_username }}'
+    controller_password: '{{ controller_password }}'
+    validate_certs: '{{ controller_verify_ssl }}'
+  register: reg_job_template_hardening_cis
+  until: reg_job_template_hardening_cis is success
+  delay: 3
+  retries: 100
+
+- name: create aws remove infra job template
+  awx.awx.job_template:
+    name: AWS Remove Infra
+    description: Remove instances
+    job_type: run
+    inventory: aws-windows-demo
+    project: ansible-windows-hardening-example
+    playbook: instance_remove_multi.yml
+    credentials:
+      - aws-demo
+      - aws-windows-machine
+    limit: tag_app_hardening_demo
+    extra_vars: "{{ (job_template_extra_vars | default({})) | to_json }}"
+    state: present
+    controller_host: '{{ controller_host }}'
+    controller_username: '{{ controller_username }}'
+    controller_password: '{{ controller_password }}'
+    validate_certs: '{{ controller_verify_ssl }}'
+  register: reg_job_template_aws_remove_infra
+  until: reg_job_template_aws_remove_infra is success
+  delay: 3
+  retries: 100
+
+- name: create aws provision infra job template
+  awx.awx.job_template:
+    name: AWS Provision Infra
+    description: Provision instances
+    job_type: run
+    inventory: local
+    project: ansible-windows-hardening-example
+    playbook: instance_create_multi.yml
+    credentials:
+      - aws-demo
+      - aws-windows-machine
+    extra_vars: "{{ (job_template_extra_vars | default({})) | to_json }}"
+    state: present
+    controller_host: '{{ controller_host }}'
+    controller_username: '{{ controller_username }}'
+    controller_password: '{{ controller_password }}'
+    validate_certs: '{{ controller_verify_ssl }}'
+  register: reg_job_template_aws_prov_infra
+  until: reg_job_template_aws_prov_infra is success
+  delay: 3
+  retries: 100

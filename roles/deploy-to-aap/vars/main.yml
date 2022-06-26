@@ -1,0 +1,21 @@
+---
+
+controller_host: "{{ lookup('env', 'TOWER_HOST') | default('localhost') }}"
+controller_username: "{{ lookup('env', 'TOWER_USERNAME') }}"
+controller_password: "{{ lookup('env', 'TOWER_PASSWORD') }}"
+controller_verify_ssl: no
+
+job_template_windows_hardening_report_extra_vars:
+  send_email_with_smtp: false
+  smtp_to_email_addresses:
+    - "{% raw %}{{ email_address }}{% endraw %}"
+
+job_template_windows_hardening_report_credentials_str: |
+  {% if reg_sendgrid_credential is defined and not (reg_sendgrid_credential.skipped | default(false)) %}
+  - sendgrid
+  {% endif %}
+  {% if reg_smtp_credential is defined and not (reg_smtp_credential.skipped | default(false)) %}
+  - smtp
+  {% endif %}
+  - aws-windows-machine
+job_template_windows_hardening_report_credentials: "{{ job_template_windows_hardening_report_credentials_str|from_yaml }}"

@@ -1,0 +1,19 @@
+---
+
+- name: create ansible-windows-hardening-example project
+  awx.awx.project:
+    name: ansible-windows-hardening-example
+    description: ansible-windows-hardening-example
+    organization: Default
+    scm_update_on_launch: False
+    scm_type: git
+    scm_url: https://github.com/oatakan/ansible-windows-hardening-example.git
+    state: present
+    controller_host: '{{ controller_host }}'
+    controller_username: '{{ controller_username }}'
+    controller_password: '{{ controller_password }}'
+    validate_certs: '{{ controller_verify_ssl }}'
+  register: reg_project_ansible_windows_hardening_example
+  until: reg_project_ansible_windows_hardening_example is success
+  delay: 3
+  retries: 100

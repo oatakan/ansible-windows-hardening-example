@@ -4,7 +4,7 @@ nodes:
   - name: win1
     role: windows_target
     app_name: hardening_demo
-    instance_type: t2.large
+    instance_type: "{{ ec2_instance_type | default('t2.large') }}"
     image: "{{ win2016_ami_id|default('ami-0105e6d241a21e66f') }}" #windows 2016
     volumes:
       - device_name: /dev/xvda
@@ -15,7 +15,7 @@ nodes:
   - name: win2
     role: windows_target
     app_name: hardening_demo
-    instance_type: t2.large
+    instance_type: "{{ ec2_instance_type | default('t2.large') }}"
     image: "{{ win2019_ami_id|default('ami-0105e6d241a21e66f') }}" #windows 2019
     volumes:
       - device_name: /dev/xvda
@@ -26,8 +26,8 @@ nodes:
   - name: win3
     role: windows_target
     app_name: hardening_demo
-    instance_type: t2.large
-    image: "{{ win2022_ami_id|default('ami-0105e6d241a21e66f') }}" #windows 2022
+    instance_type: "{{ ec2_instance_type | default('t2.large') }}"
+    image: "{{ win2019_ami_id|default('ami-0105e6d241a21e66f') }}" #windows 2022
     volumes:
       - device_name: /dev/xvda
         ebs:

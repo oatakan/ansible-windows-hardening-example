@@ -1,0 +1,28 @@
+---
+
+- name: deploy to aap
+  hosts: localhost
+  become: no
+  gather_facts: no
+  connection: local
+  vars:
+    ansible_connection: local
+  tasks:
+    - name: testing connection to aap controller
+      awx.awx.job_list:
+        controller_host: "{{ lookup('env', 'TOWER_HOST') | default('localhost') }}"
+        controller_username: "{{ lookup('env', 'TOWER_USERNAME') }}"
+        controller_password: "{{ lookup('env', 'TOWER_PASSWORD') }}"
+        validate_certs: no
+      register: testing_jobs
+      until: testing_jobs is success
+      delay: 5
+      retries: 300
+      delegate_to: localhost
+      run_once: yes
+
+    - include_role:
+        name: deploy-to-aap
+        apply:
+          delegate_to: localhost
+          become: no
