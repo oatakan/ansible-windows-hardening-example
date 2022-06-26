@@ -3,6 +3,8 @@
   strategy: "{{ play_strategy | default('linear') }}"
   vars:
     rule_2_2_33: false
+    # we use Administrator account on AWS and Azure, disable for now
+    rule_2_3_1_6: "{{ false if (ec2_id is defined or resource_group is defined ) else true }}"
     rule_9_3_5: false # do not reset firewall rules as it impacts winrm
     rule_17_2_5: false # doesn't support check mode
     rule_17_2_6: false # doesn't support check mode

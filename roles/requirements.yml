@@ -24,7 +24,7 @@
   version: origin/master
   name: oatakan.openshift-add-auth-config
 
-- src: https://github.com/ansible-lockdown/Windows-2016-CIS.git
+- src: https://github.com/oatakan/Windows-2016-CIS.git
   version: origin/devel
   name: Windows-2016-CIS
 

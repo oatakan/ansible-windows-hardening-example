@@ -4,7 +4,7 @@ nodes:
   - name: win1
     role: windows_target
     app_name: hardening_demo
-    vm_size: Standard_D2s_v3
+    vm_size: "{{ azure_vm_size | default('Standard_D2s_v3') }}"
     os_type: Windows
     image:
       sku: 2016-Datacenter-Server-Core-smalldisk
@@ -14,7 +14,7 @@ nodes:
   - name: win2
     role: windows_target
     app_name: hardening_demo
-    vm_size: Standard_D2s_v3
+    vm_size: "{{ azure_vm_size | default('Standard_D2s_v3') }}"
     os_type: Windows
     image:
       sku: 2019-Datacenter-smalldisk
@@ -24,7 +24,7 @@ nodes:
   - name: win3
     role: windows_target
     app_name: hardening_demo
-    vm_size: Standard_D2s_v3
+    vm_size: "{{ azure_vm_size | default('Standard_D2s_v3') }}"
     os_type: Windows
     image:
       sku: 2019-Datacenter-Core-smalldisk
