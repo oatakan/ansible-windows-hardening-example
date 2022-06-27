@@ -10,6 +10,7 @@
     playbook: scan_report.yml
     credentials: "{{ job_template_windows_hardening_report_credentials }}"
     limit: tag_app_hardening_demo
+    use_fact_cache: yes
     survey_enabled: yes
     survey_spec:
       name: survey

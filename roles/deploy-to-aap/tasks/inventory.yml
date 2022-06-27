@@ -10,8 +10,8 @@
     controller_username: '{{ controller_username }}'
     controller_password: '{{ controller_password }}'
     validate_certs: '{{ controller_verify_ssl }}'
-  register: reg_tower_inventory_local
-  until: reg_tower_inventory_local is success
+  register: reg_inventory_local
+  until: reg_inventory_local is success
   delay: 3
   retries: 100
 
@@ -28,6 +28,10 @@
     variables:
       ansible_connection: local
       ansible_python_interpreter: /usr/bin/python3
+  register: reg_inventory_local_add_host
+  until: reg_inventory_local_add_host is success
+  delay: 3
+  retries: 100
 
 - name: create aws-windows-demo inventory
   awx.awx.inventory:
@@ -39,8 +43,8 @@
     controller_username: '{{ controller_username }}'
     controller_password: '{{ controller_password }}'
     validate_certs: '{{ controller_verify_ssl }}'
-  register: reg_tower_inventory_aws_windows_demo
-  until: reg_tower_inventory_aws_windows_demo is success
+  register: reg_inventory_aws_windows_demo
+  until: reg_inventory_aws_windows_demo is success
   delay: 3
   retries: 100
 
@@ -68,7 +72,24 @@
     controller_username: '{{ controller_username }}'
     controller_password: '{{ controller_password }}'
     validate_certs: '{{ controller_verify_ssl }}'
-  register: reg_tower_inventory_source_aws_windows_demo_source
-  until: reg_tower_inventory_source_aws_windows_demo_source is success
+  register: reg_inventory_source_aws_windows_demo_source
+  until: reg_inventory_source_aws_windows_demo_source is success
+  delay: 3
+  retries: 100
+
+- name: create windows-non-compliant-smart inventory
+  awx.awx.inventory:
+    name: windows-non-compliant-smart
+    description: windows-non-compliant-smart
+    organization: Default
+    kind: smart
+    host_filter: "ansible_facts__security_compliance__status=false"
+    state: present
+    controller_host: '{{ controller_host }}'
+    controller_username: '{{ controller_username }}'
+    controller_password: '{{ controller_password }}'
+    validate_certs: '{{ controller_verify_ssl }}'
+  register: reg_inventory_windows_non_compliant_smart
+  until: reg_inventory_windows_non_compliant_smart is success
   delay: 3
   retries: 100
