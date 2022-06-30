@@ -48,11 +48,7 @@
             name: Default
           name: Windows Hardening CIS
           type: job_template
-        inventory:
-          name: windows-non-compliant-smart
-          organization:
-            name: Default
-          type: inventory
+        inventory: windows-non-compliant-smart
         limit: ''
         related:
           success_nodes:
