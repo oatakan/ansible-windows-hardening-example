@@ -39,11 +39,13 @@
     description: Windows Hardening CIS
     job_type: run
     inventory: aws-windows-demo
+    ask_inventory_on_launch: yes
     project: ansible-windows-hardening-example
     playbook: windows_cis_harden.yml
     credentials:
       - aws-windows-machine
     limit: tag_app_hardening_demo
+    ask_limit_on_launch: yes
     state: present
     controller_host: '{{ controller_host }}'
     controller_username: '{{ controller_username }}'
