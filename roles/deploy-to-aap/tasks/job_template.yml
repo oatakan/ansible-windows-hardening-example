@@ -38,7 +38,7 @@
     name: Windows Hardening CIS
     description: Windows Hardening CIS
     job_type: run
-    inventory: aws-windows-demo
+    inventory: windows-non-compliant-smart
     ask_inventory_on_launch: yes
     project: ansible-windows-hardening-example
     playbook: windows_cis_harden.yml
