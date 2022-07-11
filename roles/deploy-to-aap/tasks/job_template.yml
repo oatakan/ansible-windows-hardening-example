@@ -44,7 +44,7 @@
     playbook: windows_cis_harden.yml
     credentials:
       - aws-windows-machine
-    limit: tag_app_hardening_demo
+    limit: ''
     ask_limit_on_launch: yes
     state: present
     controller_host: '{{ controller_host }}'
